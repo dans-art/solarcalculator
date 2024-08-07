@@ -39,7 +39,7 @@ class solarcalc {
             }
         });
     }
-    
+
     /**
      * Changes the selected house type and updates the corresponding input field.
      *
@@ -109,11 +109,10 @@ class solarcalc {
             batt = 6500;
         }
 
-
         //Update the numbers
         this.countUp('.output-con #sc-power .number', kwpTotal);
-        this.countUp('.output-con #sc-invest .number', totalInvest);
-        this.countUp('.output-con #sc-invest-batt .number', batt);
+        this.countUp('.output-con #sc-invest .number', totalInvest, 'currency');
+        this.countUp('.output-con #sc-invest-batt .number', batt, 'currency');
         this.countUp('.output-con #sc-modules .number', m2 / 2);
         this.countUp('.output-con #sc-energy .number', kWh);
     }
@@ -121,7 +120,6 @@ class solarcalc {
     updateValues() {
         this.m2 = parseFloat(jQuery('.solarcalc #m2-input').val());
         this.rooftype = jQuery('.solarcalc #rooftype').val();
-        console.log(this.m2, this.rooftype);
     }
 
     /**
@@ -139,9 +137,10 @@ class solarcalc {
     *
     * @param {jQuery} element - The element to update with the count.
     * @param {number} newVal - The new value to count up to.
+    * @param {string} type - The expected type. Supported are: currency
     * @return {void} This function does not return anything.
     */
-    countUp(element, newVal) {
+    countUp(element, newVal, type='') {
         let oldVal = jQuery(element).val();
         oldVal = (oldVal === '') ? 0 : parseInt(oldVal);
         newVal = parseInt(newVal);
@@ -149,7 +148,13 @@ class solarcalc {
         const interval = setInterval(() => {
             const increment = newVal / 30;
             oldVal += increment;
-            jQuery(element).text(Math.floor(oldVal));
+            const number = Math.floor(oldVal);
+            if (type === 'currency') {
+                jQuery(element).text(number.toLocaleString('de-CH', { style: 'currency', currency: 'CHF' }));
+            } else {
+                jQuery(element).text(number.toLocaleString('de-CH', {style : 'decimal', maximumFractionDigits: 2}));
+
+                }
             if (newVal <= oldVal) {
                 clearInterval(interval);
             }
