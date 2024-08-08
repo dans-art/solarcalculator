@@ -63,6 +63,7 @@ class solarcalc {
     calculate(m2, rooftype) {
         let kwpPerM2 = 0;
         let costPerM2 = 0;
+        let sizeModule = 1.65; //Size in m2
 
         switch (rooftype) {
             case 'flat':
@@ -110,11 +111,11 @@ class solarcalc {
         }
 
         //Update the numbers
-        this.countUp('.output-con #sc-power .number', kwpTotal);
+        this.countUp('.output-con #sc-power .number', kwpTotal * 1000);
         this.countUp('.output-con #sc-invest .number', totalInvest, 'currency');
         this.countUp('.output-con #sc-invest-batt .number', batt, 'currency');
-        this.countUp('.output-con #sc-modules .number', m2 / 2);
-        this.countUp('.output-con #sc-energy .number', kWh);
+        this.countUp('.output-con #sc-modules .number', Math.round(m2 / sizeModule));
+        this.countUp('.output-con #sc-energy .number', kWh * 1000);
     }
 
     updateValues() {
