@@ -35,7 +35,18 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+.solarcalc .input-con > div.m2-input-con label, .solarcalc .input-con > div.m2-input-con input {
+  width: 70%;
+}
+.solarcalc .input-con > div.m2-input-con input {
+  height: 2rem;
+}
+.solarcalc .input-con > div.m2-input-con #m2-error {
+  width: 100%;
 }
 .solarcalc .input-con #m2-input {
   text-align: center;
