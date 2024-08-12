@@ -3,7 +3,7 @@ class solarcalc {
     maxM2 = 1000; //The maximum allowed m2 input
     panelEfficiency = 0.15; //The efficiency of the panels - 15%
     sunHoursPerYear = 5800; //The hours of sunlight over the year
-    calculateFactor = 950; //The factor to calculate the kWh
+    calculateFactor = 950.10; //The factor to calculate the kWh
 
     /**
      * Constructs a new instance of the solarcalc class.
@@ -75,7 +75,7 @@ class solarcalc {
             case 'steep':
                 kwpPerM2 = 0.22;
                 costPerM2 = 345;
-                factor = factor * 0.9;
+                factor = factor * 0.95;
                 break;
             case 'indach':
                 kwpPerM2 = 0.197;
@@ -147,20 +147,20 @@ class solarcalc {
     countUp(element, newVal, type = '') {
         let oldVal = jQuery(element).val();
         oldVal = (oldVal === '') ? 0 : parseInt(oldVal);
-        newVal = parseInt(newVal);
-
+        newVal = parseFloat(newVal);
         const interval = setInterval(() => {
             const increment = newVal / 30;
             oldVal += increment;
-            const number = Math.floor(oldVal);
+            let number = Math.floor(oldVal);
+            if (newVal <= oldVal) {
+                clearInterval(interval);
+                number = newVal;
+            }
             if (type === 'currency') {
                 jQuery(element).text(number.toLocaleString('de-CH', { style: 'currency', currency: 'CHF' }));
             } else {
                 jQuery(element).text(number.toLocaleString('de-CH', { style: 'decimal', maximumFractionDigits: 2 }));
 
-            }
-            if (newVal <= oldVal) {
-                clearInterval(interval);
             }
         }, 20);
     }
