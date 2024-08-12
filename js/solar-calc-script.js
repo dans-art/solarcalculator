@@ -3,6 +3,7 @@ class solarcalc {
     maxM2 = 1000; //The maximum allowed m2 input
     panelEfficiency = 0.15; //The efficiency of the panels - 15%
     sunHoursPerYear = 5800; //The hours of sunlight over the year
+    calculateFactor = 950; //The factor to calculate the kWh
 
     /**
      * Constructs a new instance of the solarcalc class.
@@ -64,6 +65,7 @@ class solarcalc {
         let kwpPerM2 = 0;
         let costPerM2 = 0;
         let sizeModule = 1.65; //Size in m2
+        let factor = this.calculateFactor;
 
         switch (rooftype) {
             case 'flat':
@@ -73,6 +75,7 @@ class solarcalc {
             case 'steep':
                 kwpPerM2 = 0.22;
                 costPerM2 = 345;
+                factor = factor * 0.9;
                 break;
             case 'indach':
                 kwpPerM2 = 0.197;
@@ -98,8 +101,8 @@ class solarcalc {
         totalInvest = (totalInvest + (costPerM2 * m2)).toFixed(0);
 
         //Calculate the kWh
-        let kWh = (kwpPerM2 * this.panelEfficiency * this.sunHoursPerYear) / 1000;
-        kWh = (kWh * m2).toFixed(2);
+        let kWh = kwpTotal * factor;
+        //kWh = (kWh * m2).toFixed(2);
 
         //Calculate the battery
         let batt = 0;
@@ -111,11 +114,11 @@ class solarcalc {
         }
 
         //Update the numbers
-        this.countUp('.output-con #sc-power .number', kwpTotal * 1000);
+        this.countUp('.output-con #sc-power .number', kwpTotal);
         this.countUp('.output-con #sc-invest .number', totalInvest, 'currency');
         this.countUp('.output-con #sc-invest-batt .number', batt, 'currency');
         this.countUp('.output-con #sc-modules .number', Math.round(m2 / sizeModule));
-        this.countUp('.output-con #sc-energy .number', kWh * 1000);
+        this.countUp('.output-con #sc-energy .number', kWh);
     }
 
     updateValues() {
@@ -141,7 +144,7 @@ class solarcalc {
     * @param {string} type - The expected type. Supported are: currency
     * @return {void} This function does not return anything.
     */
-    countUp(element, newVal, type='') {
+    countUp(element, newVal, type = '') {
         let oldVal = jQuery(element).val();
         oldVal = (oldVal === '') ? 0 : parseInt(oldVal);
         newVal = parseInt(newVal);
@@ -153,9 +156,9 @@ class solarcalc {
             if (type === 'currency') {
                 jQuery(element).text(number.toLocaleString('de-CH', { style: 'currency', currency: 'CHF' }));
             } else {
-                jQuery(element).text(number.toLocaleString('de-CH', {style : 'decimal', maximumFractionDigits: 2}));
+                jQuery(element).text(number.toLocaleString('de-CH', { style: 'decimal', maximumFractionDigits: 2 }));
 
-                }
+            }
             if (newVal <= oldVal) {
                 clearInterval(interval);
             }
