@@ -3,6 +3,7 @@ class solarcalc {
     maxM2 = 1000; //The maximum allowed m2 input
     panelEfficiency = 0.15; //The efficiency of the panels - 15%
     sunHoursPerYear = 5800; //The hours of sunlight over the year
+    calculateFactor = 950.10; //The factor to calculate the kWh
 
     /**
      * Constructs a new instance of the solarcalc class.
@@ -39,7 +40,7 @@ class solarcalc {
             }
         });
     }
-    
+
     /**
      * Changes the selected house type and updates the corresponding input field.
      *
@@ -63,19 +64,25 @@ class solarcalc {
     calculate(m2, rooftype) {
         let kwpPerM2 = 0;
         let costPerM2 = 0;
+        let sizeModule = 1.65; //Size in m2
+        let factor = this.calculateFactor;
+        let einmalverguetung = 0;
 
         switch (rooftype) {
             case 'flat':
                 kwpPerM2 = 0.225;
                 costPerM2 = 360;
+                einmalverguetung = 380;
                 break;
             case 'steep':
                 kwpPerM2 = 0.22;
                 costPerM2 = 345;
+                factor = factor * 0.95;
                 break;
             case 'indach':
                 kwpPerM2 = 0.197;
                 costPerM2 = 870;
+                einmalverguetung = 420;
                 break;
 
             default:
@@ -94,11 +101,16 @@ class solarcalc {
         if (kwpTotal > 50) {
             totalInvest + 5000;
         }
+
+        //Calculate the Einmalvergütung
+        if (kwpTotal > 2) {
+            totalInvest = (totalInvest - einmalverguetung);
+        }
         totalInvest = (totalInvest + (costPerM2 * m2)).toFixed(0);
 
         //Calculate the kWh
-        let kWh = (kwpPerM2 * this.panelEfficiency * this.sunHoursPerYear) / 1000;
-        kWh = (kWh * m2).toFixed(2);
+        let kWh = kwpTotal * factor;
+        //kWh = (kWh * m2).toFixed(2);
 
         //Calculate the battery
         let batt = 0;
@@ -109,19 +121,17 @@ class solarcalc {
             batt = 6500;
         }
 
-
         //Update the numbers
         this.countUp('.output-con #sc-power .number', kwpTotal);
-        this.countUp('.output-con #sc-invest .number', totalInvest);
-        this.countUp('.output-con #sc-invest-batt .number', batt);
-        this.countUp('.output-con #sc-modules .number', m2 / 2);
+        this.countUp('.output-con #sc-invest .number', totalInvest, 'currency');
+        this.countUp('.output-con #sc-invest-batt .number', batt, 'currency');
+        this.countUp('.output-con #sc-modules .number', Math.round(m2 / sizeModule));
         this.countUp('.output-con #sc-energy .number', kWh);
     }
 
     updateValues() {
         this.m2 = parseFloat(jQuery('.solarcalc #m2-input').val());
         this.rooftype = jQuery('.solarcalc #rooftype').val();
-        console.log(this.m2, this.rooftype);
     }
 
     /**
@@ -139,19 +149,26 @@ class solarcalc {
     *
     * @param {jQuery} element - The element to update with the count.
     * @param {number} newVal - The new value to count up to.
+    * @param {string} type - The expected type. Supported are: currency
     * @return {void} This function does not return anything.
     */
-    countUp(element, newVal) {
+    countUp(element, newVal, type = '') {
         let oldVal = jQuery(element).val();
         oldVal = (oldVal === '') ? 0 : parseInt(oldVal);
-        newVal = parseInt(newVal);
-
+        newVal = parseFloat(newVal);
         const interval = setInterval(() => {
             const increment = newVal / 30;
             oldVal += increment;
-            jQuery(element).text(Math.floor(oldVal));
+            let number = Math.floor(oldVal);
             if (newVal <= oldVal) {
                 clearInterval(interval);
+                number = newVal;
+            }
+            if (type === 'currency') {
+                jQuery(element).text(number.toLocaleString('de-CH', { style: 'currency', currency: 'CHF' }));
+            } else {
+                jQuery(element).text(number.toLocaleString('de-CH', { style: 'decimal', maximumFractionDigits: 2 }));
+
             }
         }, 20);
     }
