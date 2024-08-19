@@ -94,6 +94,10 @@
 }
 .solarcalc .item .info {
   position: relative;
+  display: none;
+}
+.solarcalc .item .info.show {
+  display: inline-block;
 }
 .solarcalc .item .info .info-icon {
   width: 20px;
@@ -111,7 +115,9 @@
   display: block;
   padding: 1rem;
   top: 15px;
+  right: 0;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 @media screen and (max-width: 600px) {
