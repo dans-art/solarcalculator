@@ -6,8 +6,8 @@
  * Contributors: dansart
  * Contributors URL: http://dev.dans-art.ch
  * Tags: solar, calculator, calc
- * Version: 0.3
- * Stable tag: 0.3
+ * Version: 0.3.1
+ * Stable tag: 0.3.1
  * 
  * Domain Path: /languages
  * Text Domain: solarcalc
@@ -25,6 +25,7 @@
  * - Added mobile styles
  * - Added currency and decimal formatting
  * - Added Einmalvergütung
+ * - Added Einmalvergütung info
  */
 
 if (!defined('ABSPATH')) {
