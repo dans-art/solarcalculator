@@ -39,7 +39,8 @@
   gap: 1rem;
   padding: 2rem;
 }
-.solarcalc .input-con > div.m2-input-con label, .solarcalc .input-con > div.m2-input-con input {
+.solarcalc .input-con > div.m2-input-con label,
+.solarcalc .input-con > div.m2-input-con input {
   width: 70%;
 }
 .solarcalc .input-con > div.m2-input-con input {
@@ -90,6 +91,27 @@
 .solarcalc .output-con .number {
   font-size: 1.5rem;
   font-weight: bold;
+}
+.solarcalc .item .info {
+  position: relative;
+}
+.solarcalc .item .info .info-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  cursor: pointer;
+}
+.solarcalc .item .info .text {
+  display: none;
+  position: absolute;
+  background-color: #FEDC00;
+  border-radius: 13px;
+}
+.solarcalc .item .info:hover .text {
+  display: block;
+  padding: 1rem;
+  top: 15px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (max-width: 600px) {

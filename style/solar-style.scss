@@ -33,7 +33,8 @@
                 max-width: 150px;
                 width: 100%;
             }
-            h4{
+
+            h4 {
                 text-align: center;
             }
         }
@@ -46,15 +47,16 @@
             gap: 1rem;
             padding: 2rem;
 
-            label, input{
+            label,
+            input {
                 width: 70%;
             }
-            
-            input{
+
+            input {
                 height: 2rem;
             }
 
-            #m2-error{
+            #m2-error {
                 width: 100%;
             }
         }
@@ -106,6 +108,33 @@
         .number {
             font-size: 1.5rem;
             font-weight: bold;
+        }
+    }
+
+    .item .info {
+        position: relative;
+
+        .info-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .text {
+            display: none;
+            position: absolute;
+            background-color: #FEDC00;
+            border-radius: 13px;
+        }
+
+        &:hover {
+            .text {
+                display: block;
+                padding: 1rem;
+                top: 15px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+            }
         }
     }
 }

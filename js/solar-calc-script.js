@@ -105,6 +105,8 @@ class solarcalc {
         //Calculate the Einmalvergütung
         if (kwpTotal > 2) {
             totalInvest = (totalInvest - einmalverguetung);
+            //Add a info for the Einmalverguetung
+            jQuery('.solarcalc #sc-invest .info .text').html(`<a href="https://pronovo.ch/" target="_blank">Pronovo</a> Einmalvergültung ab 2 kWp`);
         }
         totalInvest = (totalInvest + (costPerM2 * m2)).toFixed(0);
 

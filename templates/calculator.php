@@ -30,7 +30,7 @@
         </div>
         <div class="m2-input-con">
             <label for='m2-input'><?php echo __('Fläche in m2', 'solarcalc'); ?></label>
-            <input id='m2-input' type='text' value="30" />
+            <input id='m2-input' type='number' value="30" />
             <div id="m2-error" class="error-con"></div>
         </div>
     </div>
@@ -66,7 +66,17 @@
                 </svg>
             </div>
             <div class="number"></div>
-            <div class="name"><?php echo __('Investition in CHF', 'solarcalc') ?></div>
+            <div class="name">
+                <?php echo __('Investition in CHF', 'solarcalc') ?>
+                <span class="info">
+                    <span class="info-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 330H200c-13.255 0-24-10.745-24-24 0-13.255 10.745-24 24-24h16v-112h-16c-13.255 0-24-10.745-24-24 0-13.255 10.745-24 24-24h72c13.255 0 24 10.745 24 24 0 13.255-10.745 24-24 24h-16v112h56c13.255 0 24 10.745 24 24 0 13.255-10.745 24-24 24z" />
+                        </svg>
+                    </span>
+                    <div class="text"></div>
+                </span>
+            </div>
         </div>
         <div id="sc-invest-batt" class='item'>
             <div class="icon">
