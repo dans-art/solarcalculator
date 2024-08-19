@@ -66,11 +66,13 @@ class solarcalc {
         let costPerM2 = 0;
         let sizeModule = 1.65; //Size in m2
         let factor = this.calculateFactor;
+        let einmalverguetung = 0;
 
         switch (rooftype) {
             case 'flat':
                 kwpPerM2 = 0.225;
                 costPerM2 = 360;
+                einmalverguetung = 380;
                 break;
             case 'steep':
                 kwpPerM2 = 0.22;
@@ -80,6 +82,7 @@ class solarcalc {
             case 'indach':
                 kwpPerM2 = 0.197;
                 costPerM2 = 870;
+                einmalverguetung = 420;
                 break;
 
             default:
@@ -97,6 +100,11 @@ class solarcalc {
         }
         if (kwpTotal > 50) {
             totalInvest + 5000;
+        }
+
+        //Calculate the Einmalvergütung
+        if (kwpTotal > 2) {
+            totalInvest = (totalInvest - einmalverguetung);
         }
         totalInvest = (totalInvest + (costPerM2 * m2)).toFixed(0);
 
